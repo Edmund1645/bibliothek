@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Pagination from "react-paginate";
 
-import { BookSchema } from "./@types/search";
 import { searchBookByTitle } from "./api/search";
 
 import SearchInput from "./components/SearchInput";
@@ -13,6 +12,8 @@ import BookDetailsModal from "./components/BookDetailsModal";
 import { ModalProvider } from "./contexts/modal";
 import { BooksContext } from "./contexts/books";
 
+import usePagination from "./hooks/pagination";
+
 function App() {
   const [searchString, setSearchString] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,21 +22,10 @@ function App() {
 
   const { state, dispatch } = useContext(BooksContext);
 
-  // for pagination
-  const [currentItems, setCurrentItems] = useState<BookSchema[]>([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
-
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(state.books.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(state.books.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, state.books]);
-
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % state.books.length;
-    setItemOffset(newOffset);
-  };
+  const { currentItems, pageCount, handlePageClick } = usePagination(
+    state.books,
+    itemsPerPage
+  );
 
   const searchBooks = async () => {
     try {
