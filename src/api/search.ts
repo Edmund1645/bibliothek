@@ -2,7 +2,7 @@ import axios from "axios";
 import { SearchAPIResponse } from "../@types/search";
 
 const searchApi = axios.create({
-  baseURL: "http://openlibrary.org/search.json",
+  baseURL: "https://openlibrary.org/search.json",
 });
 
 export const searchBookByTitle = (title: string) => {

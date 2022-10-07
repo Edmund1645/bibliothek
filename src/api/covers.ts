@@ -1,4 +1,4 @@
-const coversBaseURL = "http://covers.openlibrary.org/b/id";
+const coversBaseURL = "https://covers.openlibrary.org/b/id";
 
 export const getThumbnail = (coverId: number) => {
   return `${coversBaseURL}/${coverId}-M.jpg`;
