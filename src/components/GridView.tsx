@@ -10,7 +10,7 @@ interface Props {
 }
 
 const GridView = ({ books }: Props) => {
-  const { state, dispatch } = useContext(ModalContext);
+  const { dispatch } = useContext(ModalContext);
 
   const handleThumbnailClick = (currentBook: BookSchema) => {
     dispatch({ type: "OPEN_MODAL", payload: currentBook });
